@@ -7,7 +7,8 @@ const Navbar = () => {
                 <div className="topbar-left">
                     <button className="topbar-toggler">☰</button>
                     <a className="topbar-brand" href="index.html">
-                        <img className="logo-default" src="assets/img/logo.png" alt="logo" />.Blog
+                        <img className="logo-default" src={`${process.env.PUBLIC_URL}/assets/img/logo-light.png`} alt="logo" />
+                        <img className="logo-inverse" src={`${process.env.PUBLIC_URL}/assets/img/logo.png`} alt="logo" />
                     </a>
                 </div>
                 
