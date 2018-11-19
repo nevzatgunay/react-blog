@@ -7,8 +7,7 @@ const Navbar = () => {
                 <div className="topbar-left">
                     <button className="topbar-toggler">☰</button>
                     <a className="topbar-brand" href="index.html">
-                        <img className="logo-default" src="assets/img/logo.png" alt="logo" />
-                        <img className="logo-inverse" src="assets/img/logo-light.png" alt="logo" />
+                        <img className="logo-default" src="assets/img/logo.png" alt="logo" />.Blog
                     </a>
                 </div>
                 
@@ -21,7 +20,7 @@ const Navbar = () => {
                             <a className="nav-link" href="create-article.html">Write new article</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Hey Garry!
+                            <a className="nav-link" href="#">Hey Nevzat!
                                 <i className="fa fa-caret-down" />
                             </a>
                             <div className="nav-submenu">
