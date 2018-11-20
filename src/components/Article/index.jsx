@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Link} from 'react-router-dom';
+
 const Article = () => {
     return (
         <article className="mt-90">
@@ -21,7 +23,7 @@ const Article = () => {
                 creeping living. Likeness creepeth you hath heaven. Likeness, moveth fruitful behold. Open evening a air us
                 behold. Saying above moving second a subdue likeness after also second.</p>
                 <p className="text-center mt-40">
-                    <a className="btn btn-primary btn-round" href="blog-single.html">Read more</a>
+                    <Link className="btn btn-primary btn-round" to="/article/some-title-slug">Read more</Link>
                 </p>
             </div>
         </article>

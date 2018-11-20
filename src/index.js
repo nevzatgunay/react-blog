@@ -7,6 +7,7 @@ import Welcome from './components/Welcome';
 import Footer from './components/Footer';
 import CreateArticle from './components/CreateArticle';
 import Login from './components/Login';
+import SingleArticle from './components/SingleArticle';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -27,6 +28,7 @@ ReactDOM.render(
             <Route path='/about' component={About}/>
             <Route path='/home' component={Home}/>
             <Route path='/login' component={Login}/>
+            <Route path='/article' component={SingleArticle}/>
             <Route path='/articles/create' component={CreateArticle}/>
             <Footer/>
         </div>
