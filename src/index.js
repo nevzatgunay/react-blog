@@ -8,16 +8,9 @@ import Footer from './components/Footer';
 import CreateArticle from './components/CreateArticle';
 import Login from './components/Login';
 import SingleArticle from './components/SingleArticle';
+import Register from './components/Register';
 
 import * as serviceWorker from './serviceWorker';
-
-const Home = () => {
-    return <h1>THIS IS THE HOME PAGE</h1>
-};
-
-const About = () => {
-    return <h1>THIS IS THE ABOUT PAGE</h1>
-};
 
 ReactDOM.render(
     
@@ -25,11 +18,10 @@ ReactDOM.render(
         <div>
             <Navbar/>
             <Route exact path='/' component={Welcome}/>
-            <Route path='/about' component={About}/>
-            <Route path='/home' component={Home}/>
             <Route path='/login' component={Login}/>
             <Route path='/article' component={SingleArticle}/>
             <Route path='/articles/create' component={CreateArticle}/>
+            <Route path='/register' component={Register}/>
             <Footer/>
         </div>
     </BrowserRouter>
