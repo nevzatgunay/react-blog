@@ -16,13 +16,15 @@ ReactDOM.render(
     
     <BrowserRouter>
         <div>
-            <Navbar/>
-            <Route exact path='/' component={Welcome}/>
-            <Route path='/login' component={Login}/>
-            <Route path='/article' component={SingleArticle}/>
-            <Route path='/articles/create' component={CreateArticle}/>
-            <Route path='/register' component={Register}/>
-            <Footer/>
+            <Route path="/(?(!login|!register))" component={Navbar}/>
+            <div>
+                <Route exact path='/' component={Welcome}/>
+                <Route path='/article' component={SingleArticle}/>
+                <Route path='/articles/create' component={CreateArticle}/>
+                <Route path='/login' component={Login}/>
+                <Route path='/register' component={Register}/>
+            </div>
+            <Route path="/(?(!login|!register))" component={Footer}/>        
         </div>
     </BrowserRouter>
 
