@@ -16,7 +16,7 @@ ReactDOM.render(
     
     <BrowserRouter>
         <div>
-            <Route path="/(?(!login|!register))" component={Navbar}/>
+            <Route path={`/(article|articles/create|)`} component={Navbar}/>
             <div>
                 <Route exact path='/' component={Welcome}/>
                 <Route path='/article' component={SingleArticle}/>
@@ -24,7 +24,7 @@ ReactDOM.render(
                 <Route path='/login' component={Login}/>
                 <Route path='/register' component={Register}/>
             </div>
-            <Route path="/(?(!login|!register))" component={Footer}/>        
+            <Route path={`/(article|articles/create|)`} component={Footer}/>        
         </div>
     </BrowserRouter>
 
