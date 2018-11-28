@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Welcome from './components/Welcome';
@@ -12,11 +12,14 @@ import Register from './components/Register';
 
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-    
-    <BrowserRouter>
+const Main = withRouter(({ location }) => {
+    return (
         <div>
-            <Route path={`/(article|articles/create|)`} component={Navbar}/>
+            {
+                location.pathname !== '/login' && location.pathname !== '/register' &&
+                <Navbar/>
+            }
+            
             <div>
                 <Route exact path='/' component={Welcome}/>
                 <Route path='/article' component={SingleArticle}/>
@@ -24,8 +27,18 @@ ReactDOM.render(
                 <Route path='/login' component={Login}/>
                 <Route path='/register' component={Register}/>
             </div>
-            <Route path={`/(article|articles/create|)`} component={Footer}/>        
+            {
+                location.pathname !== '/login' && location.pathname !== '/register' &&
+                <Footer/>
+            }      
         </div>
+    );
+});
+
+ReactDOM.render(
+    
+    <BrowserRouter>
+        <Main/>
     </BrowserRouter>
 
     , document.getElementById('root'));
