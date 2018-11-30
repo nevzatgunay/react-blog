@@ -22,9 +22,9 @@ const Navbar = () => {
                             <Link className="nav-link" to="/articles/create">Write new article</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Hey Nevzat!
+                            <Link className="nav-link" to="#">Hey Nevzat!
                                 <i className="fa fa-caret-down" />
-                            </a>
+                            </Link>
                             <div className="nav-submenu">
                                 <a className="nav-link" href="page-login.html">My articles</a>
                                 <a className="nav-link" href>Logout</a>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Article from './../Article';
 import Banner from './../Banner';
@@ -21,11 +22,11 @@ const Welcome = () => {
                         <Article/>
 
                         <nav className="flexbox mt-50 mb-50">
-                            <a className="btn btn-white disabled">
-                                <i className="ti-arrow-left fs-9 mr-4" /> Newer</a>
-                            <a className="btn btn-white" href="#">Older
+                            <Link className="btn btn-white disabled">
+                                <i className="ti-arrow-left fs-9 mr-4" /> Newer</Link>
+                            <Link className="btn btn-white" href="#">Older
                                 <i className="ti-arrow-right fs-9 ml-4" />
-                            </a>
+                            </Link>
                         </nav>
 
                     </div>

@@ -2,6 +2,8 @@ import React from 'react';
 
 import {Link} from 'react-router-dom';
 
+import {validateAll} from 'indicative';
+
 class Register extends React.Component {
     constructor(){
         super();
@@ -10,7 +12,8 @@ class Register extends React.Component {
             name: '',
             email: '',
             password: '',
-            passwordConfirm: ''
+            password_confirmation: '',
+            errors: {}
         };
 
         
@@ -22,6 +25,35 @@ class Register extends React.Component {
         });
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault()
+        
+        const data = this.state;
+        const rules = {
+            name: 'required|string',
+            email: 'required|email',
+            password: 'required|string|min:6|confirmed'
+        };
+
+        const messages = {
+            required: 'The {{ field }} is required.',
+            'email.email': 'The email is invalid.',
+            'password.confirmed': 'The password confirmaton does not match.'
+        };
+
+        validateAll(data, rules, messages)
+            .then(() => {
+                console.log("Success!");
+            })
+            .catch(errors => {
+                const formattedErrors = {}
+                errors.forEach(error => formattedErrors[error.field] = error.message)
+                this.setState({
+                    errors: formattedErrors
+                })
+            })
+    }
+
     render(){
         return (
             <div className="mh-fullscreen bg-img center-vh p-20" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/assets/img/bg-girl.jpg)`}}>
@@ -29,15 +61,27 @@ class Register extends React.Component {
                     <h5 className="text-uppercase text-center">Register</h5>
                     <br />
                     <br />
-                    <form className="form-type-material">
+                    <form className="form-type-material" onSubmit={ this.handleSubmit } >
                         <div className="form-group">
                             <input type="text" name="name" onChange={this.handleInputChange} className="form-control" placeholder="Username" />
+                            {
+                                this.state.errors['name'] &&
+                                <small className="text-danger">{ this.state.errors['name'] }</small>
+                            }
                         </div>
                         <div className="form-group">
                             <input type="text" name="email" onChange={this.handleInputChange} className="form-control" placeholder="Email address" />
+                            {
+                                this.state.errors['email'] &&
+                                <small className="text-danger">{ this.state.errors['email'] }</small>
+                            }
                         </div>
                         <div className="form-group">
-                            <input type="password" name="password" onChange={this.handleInputChange} className="form-control" placeholder="Password" />
+                            <input type="password" name="password_confirmation" onChange={this.handleInputChange} className="form-control" placeholder="Password" />
+                            {
+                                this.state.errors['password'] &&
+                                <small className="text-danger">{ this.state.errors['password'] }</small>
+                            }
                         </div>
                         <div className="form-group">
                             <input type="password" name="passwordConfirm" onChange={this.handleInputChange} className="form-control" placeholder="Password (confirm)" />
