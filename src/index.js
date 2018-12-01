@@ -32,6 +32,12 @@ class App extends React.Component{
         }
     }
 
+    setAuthUser = (authUser) => {
+        this.setState = ({
+            authUser
+        });
+    }
+
     render(){
 
         const { location } = this.props;
@@ -48,7 +54,7 @@ class App extends React.Component{
                     <Route path='/article' component={SingleArticle}/>
                     <Route path='/articles/create' component={CreateArticle}/>
                     <Route path='/login' component={Login}/>
-                    <Route path='/register' component={Register}/>
+                    <Route path='/register' render={(props) => <Register {...props} setAuthUser={ this.setAuthUser }/>}/>
                 </div>
                 {
                     location.pathname !== '/login' && location.pathname !== '/register' &&

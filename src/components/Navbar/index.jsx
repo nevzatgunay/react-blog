@@ -26,13 +26,12 @@ const Navbar = ({ authUser }) => {
                             <Link className="nav-link" to="#">Hey { authUser && authUser.user.name }!
                                 <i className="fa fa-caret-down" />
                             </Link>
-                            {
-                                authUser &&    
+                               
                                 <div className="nav-submenu">
                                     <a className="nav-link" href="page-login.html">My articles</a>
                                     <a className="nav-link" href="#">Logout</a>
                                 </div>
-                            }
+                            
                         </li>
                         
                         {
