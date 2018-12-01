@@ -27,7 +27,7 @@ const Navbar = () => {
                             </Link>
                             <div className="nav-submenu">
                                 <a className="nav-link" href="page-login.html">My articles</a>
-                                <a className="nav-link" href>Logout</a>
+                                <a className="nav-link" href="#">Logout</a>
                             </div>
                         </li>
                         <li className="nav-item">

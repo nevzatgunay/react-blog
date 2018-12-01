@@ -77,14 +77,18 @@ class Register extends React.Component {
                             }
                         </div>
                         <div className="form-group">
-                            <input type="password" name="password_confirmation" onChange={this.handleInputChange} className="form-control" placeholder="Password" />
+                            <input type="password" name="password" onChange={this.handleInputChange} className="form-control" placeholder="Password" />
                             {
                                 this.state.errors['password'] &&
                                 <small className="text-danger">{ this.state.errors['password'] }</small>
                             }
                         </div>
                         <div className="form-group">
-                            <input type="password" name="passwordConfirm" onChange={this.handleInputChange} className="form-control" placeholder="Password (confirm)" />
+                            <input type="password" name="password_confirmation" onChange={this.handleInputChange} className="form-control" placeholder="Password (confirm)" />
+                            {
+                                this.state.errors['password_confirmation'] &&
+                                <small className="text-danger">{ this.state.errors['password_confirmation'] }</small>
+                            }
                         </div>
                         <br />
                         <button className="btn btn-bold btn-block btn-primary" type="submit">Register</button>

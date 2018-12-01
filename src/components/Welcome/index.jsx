@@ -22,9 +22,9 @@ const Welcome = () => {
                         <Article/>
 
                         <nav className="flexbox mt-50 mb-50">
-                            <Link className="btn btn-white disabled">
+                            <Link className="btn btn-white disabled" to="#">
                                 <i className="ti-arrow-left fs-9 mr-4" /> Newer</Link>
-                            <Link className="btn btn-white" href="#">Older
+                            <Link className="btn btn-white" to="#">Older
                                 <i className="ti-arrow-right fs-9 ml-4" />
                             </Link>
                         </nav>
