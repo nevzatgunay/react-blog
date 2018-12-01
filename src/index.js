@@ -12,26 +12,56 @@ import Register from './components/Register';
 
 import * as serviceWorker from './serviceWorker';
 
-const Main = withRouter(({ location }) => {
-    return (
-        <div>
-            {
-                location.pathname !== '/login' && location.pathname !== '/register' &&
-                <Navbar/>
-            }
-            
+class App extends React.Component{
+    
+    constructor(){
+        super();
+
+        this.state = {
+            authUser: null
+        };
+    }
+
+    componentDidMount(){
+        const user = localStorage.getItem('user')
+
+        if(user){
+            this.setState({
+                authUser: JSON.parse(user)
+            })
+        }
+    }
+
+    render(){
+
+        const { location } = this.props;
+
+        return(
             <div>
-                <Route exact path='/' component={Welcome}/>
-                <Route path='/article' component={SingleArticle}/>
-                <Route path='/articles/create' component={CreateArticle}/>
-                <Route path='/login' component={Login}/>
-                <Route path='/register' component={Register}/>
+                {
+                    location.pathname !== '/login' && location.pathname !== '/register' &&
+                    <Navbar authUser={ this.state.authUser }/>
+                }
+                
+                <div>
+                    <Route exact path='/' component={Welcome}/>
+                    <Route path='/article' component={SingleArticle}/>
+                    <Route path='/articles/create' component={CreateArticle}/>
+                    <Route path='/login' component={Login}/>
+                    <Route path='/register' component={Register}/>
+                </div>
+                {
+                    location.pathname !== '/login' && location.pathname !== '/register' &&
+                    <Footer/>
+                }      
             </div>
-            {
-                location.pathname !== '/login' && location.pathname !== '/register' &&
-                <Footer/>
-            }      
-        </div>
+        );
+    }
+}
+
+const Main = withRouter(( props ) => {
+    return (
+        <App { ...props }/>
     );
 });
 
