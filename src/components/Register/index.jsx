@@ -26,7 +26,7 @@ class Register extends React.Component {
         });
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault()
         
         const data = this.state;
@@ -41,6 +41,36 @@ class Register extends React.Component {
             'email.email': 'The email is invalid.',
             'password.confirmed': 'The password confirmaton does not match.'
         };
+
+        try{
+            await validateAll(data, rules, messages)
+
+            try{
+                const response = Axios.post(`${config.apiUrl}/auth/register`, {
+                    name: this.state.name,
+                    email: this.state.email,
+                    password: this.state.password
+                })
+
+                localStorage.setItem('user', JSON.stringify(response.data.data))
+                this.props.setAuthUser(response.data.data)
+                this.props.history.push('/');
+
+            }catch(errors){
+                const formattedErrors = {};
+                formattedErrors['email'] = errors.response.data['email'][0];
+                this.setState({
+                    errors: formattedErrors
+                });
+            }
+
+        }catch(errors){
+            const formattedErrors = {}
+            errors.forEach(error => formattedErrors[error.field] = error.message)
+            this.setState({
+                errors: formattedErrors
+            })
+        }
 
         validateAll(data, rules, messages)
             .then(() => {
@@ -59,13 +89,6 @@ class Register extends React.Component {
                     this.setState({
                         errors: formattedErrors
                     });
-                })
-            })
-            .catch(errors => {
-                const formattedErrors = {}
-                errors.forEach(error => formattedErrors[error.field] = error.message)
-                this.setState({
-                    errors: formattedErrors
                 })
             })
     }
