@@ -9,6 +9,7 @@ import CreateArticle from './components/CreateArticle';
 import Login from './components/Login';
 import SingleArticle from './components/SingleArticle';
 import Register from './components/Register';
+import AuthService from './services/auth';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -54,7 +55,12 @@ class App extends React.Component{
                     <Route path='/article' component={SingleArticle}/>
                     <Route path='/articles/create' component={CreateArticle}/>
                     <Route path='/login' component={Login}/>
-                    <Route path='/register' render={(props) => <Register {...props} setAuthUser={ this.setAuthUser }/>}/>
+                    <Route path='/register' render={
+                        (props) => <Register {...props} 
+                        registerUser={this.props.authService.registerUser} 
+                        setAuthUser={ this.setAuthUser }/>
+                        }
+                    />
                 </div>
                 {
                     location.pathname !== '/login' && location.pathname !== '/register' &&
@@ -67,7 +73,7 @@ class App extends React.Component{
 
 const Main = withRouter(( props ) => {
     return (
-        <App { ...props }/>
+        <App authService={new AuthService()} { ...props }/>
     );
 });
 
