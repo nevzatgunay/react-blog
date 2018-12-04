@@ -29,7 +29,7 @@ class App extends React.Component{
         if(user){
             this.setState({
                 authUser: JSON.parse(user)
-            })
+            });
         }
     }
 
