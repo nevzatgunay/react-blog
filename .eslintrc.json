@@ -6,10 +6,11 @@
         "jsx-a11y/anchor-is-valid": 0,
         "jsx-a11y/label-has-for": 0,
         "class-methods-use-this": 0,
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        "react/jsx-filename-extension": 0
     },
     "globals": {
-        "localStorage": true
+        "localStorage": true,
+        "document": true
     }
     
 }

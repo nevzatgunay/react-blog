@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Navbar from '../Navbar';
@@ -38,28 +39,33 @@ class App extends React.Component {
     return (
       <div>
         {
-          location.pathname !== '/login' && location.pathname !== '/register' &&
-          <Navbar authUser={this.state.authUser}/>
+          location.pathname !== '/login' && location.pathname !== '/register' && (
+            // eslint-disable-next-line
+            <Navbar authUser={this.state.authUser} />
+          )
         }
-        <Route exact path='/' component={Welcome}/>
-        <Route path='/article' component={SingleArticle}/>
-        <Route path='/articles/create' component={CreateArticle}/>
-        <Route path='/login' component={Login}/>
+        <Route exact path="/" component={Welcome} />
+        <Route path="/article" component={SingleArticle} />
+        <Route path="/articles/create" component={CreateArticle} />
+        <Route path="/login" component={Login} />
         <Route
-          path='/register'
+          path="/register"
           render={
-          props => (<Register
-            {...props}
-            registerUser={this.props.authService.registerUser}
-            setAuthUser={ this.setAuthUser }
+          props => (
+            <Register
+              {...props}
+              // eslint-disable-next-line
+              registerUser={this.props.authService.registerUser}
+              setAuthUser={this.setAuthUser}
             />)
           }
         />
         {
-          location.pathname !== '/login' && location.pathname !== '/register' &&
-          <Footer/>
+          location.pathname !== '/login' && location.pathname !== '/register' && (
+            <Footer />
+          )
         }
-        </div>
+      </div>
     );
   }
 }
