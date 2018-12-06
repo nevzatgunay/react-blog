@@ -13,8 +13,8 @@ const Main = withRouter(props => ((
 ReactDOM.render(
   <BrowserRouter>
     <Main />
-  </BrowserRouter>
-  , document.getElementById('root'),
+  </BrowserRouter>,
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

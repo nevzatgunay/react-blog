@@ -25,7 +25,7 @@ const Navbar = ({ authUser }) => {
               <Link className="nav-link" to="#foo">
                 Hey
                 { authUser && authUser.user.name }
-                !
+                 !
                 <i className="fa fa-caret-down" />
               </Link>
               <div className="nav-submenu">
