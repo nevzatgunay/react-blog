@@ -31,6 +31,9 @@ class App extends React.Component {
     this.setState = ({
       authUser,
     });
+    console.log('history:push');
+    localStorage.setItem('user', JSON.stringify(authUser));
+    this.props.history.push('/');
   }
 
   render() {
@@ -47,7 +50,18 @@ class App extends React.Component {
         <Route exact path="/" component={Welcome} />
         <Route path="/article" component={SingleArticle} />
         <Route path="/articles/create" component={CreateArticle} />
-        <Route path="/login" component={Login} />
+        <Route
+          path="/login"
+          render={
+            props => (
+              <Login
+                {...props}
+                setAuthUser={this.setAuthUser}
+                // eslint-disable-next-line
+                loginUser={this.props.authService.loginUser}
+              />)
+          }
+        />
         <Route
           path="/register"
           render={
@@ -73,6 +87,9 @@ class App extends React.Component {
 App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
   }).isRequired,
   authService: PropTypes.objectOf(PropTypes.func).isRequired,
 };
