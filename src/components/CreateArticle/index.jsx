@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import CreateArticleForm from './CreateArticleForm';
 
 class CreateArticle extends React.Component {
@@ -24,6 +24,18 @@ class CreateArticle extends React.Component {
     });
   }
 
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await this.props.createArticle(this.state, this.props.token);
+      this.props.history.push('/');
+    } catch (errors) {
+      this.setState({
+        errors,
+      });
+    }
+  }
+
   handleInputChange = (event) => {
     this.setState({
       [event.target.name]: event.target.type === 'file' ? event.target.files[0] : event.target.value,
@@ -35,9 +47,16 @@ class CreateArticle extends React.Component {
       <CreateArticleForm
         handleInputChange={this.handleInputChange}
         categories={this.state.categories}
+        handleSubmit={this.handleSubmit}
       />
     );
   }
 }
+
+CreateArticle.propType = {
+  getArticleCategories: PropTypes.func.isRequired,
+  createArticle: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+};
 
 export default CreateArticle;
