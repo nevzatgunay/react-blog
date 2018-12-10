@@ -49,7 +49,17 @@ class App extends React.Component {
         }
         <Route exact path="/" component={Welcome} />
         <Route path="/article" component={SingleArticle} />
-        <Route path="/articles/create" component={CreateArticle} />
+        <Route
+          path="/articles/create"
+          render={
+            props => (
+              <CreateArticle
+                {...props}
+                getArticleCategories={this.props.articlesService.getArticleCategories}
+              />
+            )
+          } 
+        />
         <Route
           path="/login"
           render={

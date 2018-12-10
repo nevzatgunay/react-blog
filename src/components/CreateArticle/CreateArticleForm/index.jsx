@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Banner from '../../Banner';
 
 
-const CreateArticle = ({ handleInputChange }) => {
+const CreateArticle = ({ handleInputChange, categories }) => {
   return (
     <div>
       <Banner
@@ -25,10 +25,16 @@ const CreateArticle = ({ handleInputChange }) => {
                       <input className="form-control form-control-lg" type="text" name="title" placeholder="Title" onChange={handleInputChange} />
                     </div>
                     <div className="form-group col-12 col-md-6">
-                      <select name="channel" onChange={handleInputChange} id className="form-control form-control-lg">
-                        <option value>Select category</option>
-                        <option value>Vuejs</option>
-                        <option value>Reactjs</option>
+                      <select name="category" onChange={handleInputChange} id className="form-control form-control-lg">
+                        {
+                          categories.map(
+                            category => (
+                              <option key={category.id} value={category.id}>
+                                {category.name}
+                              </option>
+                            ),
+                          )
+                        }
                       </select>
                     </div>
                   </div>
@@ -55,8 +61,9 @@ const CreateArticle = ({ handleInputChange }) => {
   );
 };
 
-CreateArticle.protoTypes = {
+CreateArticle.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
+  categories: PropTypes.arrayOf(PropTypes.array).isRequired,
 };
 
 export default CreateArticle;
