@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Banner from '../../Banner';
 import Article from '../../Article';
 
 
-const Articles = ({ articles }) => {
+const Articles = ({ articles, handlePagination, nextUrl, prevUrl }) => {
   return (
     <div>
       <Banner
@@ -24,20 +25,26 @@ const Articles = ({ articles }) => {
               ))
             }
             <nav className="flexbox mt-50 mb-50">
-              <Link className="btn btn-white disabled" to="#foo">
-                <i className="ti-arrow-left fs-9 mr-4" />
-                Newer
-              </Link>
-              <Link className="btn btn-white" to="#foo">
-                Older
-                <i className="ti-arrow-right fs-9 ml-4" />
-              </Link>
+              <a className={`btn btn-white${prevUrl ? '' : 'disable'}`} href="#" onClick={() => handlePagination(prevUrl)}>
+                <i className="ti-arrow-left fs-9 ml-4" />
+                Previous
+              </a>
+              <a className={`btn btn-white${nextUrl ? '' : 'disable'}`} href="#" onClick={() => handlePagination(nextUrl)}>
+                Next
+                <i className="ti-arrow-right fs-9 mr-4" />
+              </a>
             </nav>
           </div>
         </div>
       </main>
     </div>
   );
+};
+
+Articles.propTypes = {
+  articles: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  })).isRequired,
 };
 
 export default Articles;
