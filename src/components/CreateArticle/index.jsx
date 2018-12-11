@@ -11,7 +11,7 @@ class CreateArticle extends React.Component {
       image: null,
       content: '',
       category: '',
-      errors: {},
+      errors: [],
       categories: [],
     };
   }
@@ -48,6 +48,7 @@ class CreateArticle extends React.Component {
         handleInputChange={this.handleInputChange}
         categories={this.state.categories}
         handleSubmit={this.handleSubmit}
+        errors={this.state.errors}
       />
     );
   }

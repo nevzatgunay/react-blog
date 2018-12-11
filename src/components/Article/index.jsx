@@ -2,21 +2,21 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-const Article = () => {
+const Article = ({ article }) => {
   return (
     <article className="mt-90">
       <header className="text-center mb-40">
         <h3>
-          <a href="blog-single.html">New features will add to dashboard soon</a>
+          <a href="blog-single.html">{article.title}</a>
         </h3>
         <div className="link-color-default fs-12">
-          <Link to="/">News</Link>
+          <Link to="/">{article.category.name}</Link>
           ,
-          <time>May 13, 2017</time>
+          <time>{(new Date(article.created_at)).toDateString()}</time>
         </div>
       </header>
       <a href="blog-single.html">
-        <img className="rounded" src="assets/img/blog-1.jpg" alt="..." />
+        <img className="rounded" src={article.imageUrl} alt="..." />
       </a>
       <div className="card-block">
         <p className="text-justify">

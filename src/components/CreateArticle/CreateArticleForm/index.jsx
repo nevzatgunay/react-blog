@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Banner from '../../Banner';
 
 
-const CreateArticle = ({ handleInputChange, categories, handleSubmit }) => {
+const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors }) => {
   return (
     <div>
       <Banner
@@ -16,6 +16,9 @@ const CreateArticle = ({ handleInputChange, categories, handleSubmit }) => {
           <div className="container">
             <div className="row">
               <div className="col-12 col-lg-12">
+                <ul className="list-group">
+                  {errors.map(error => <li key={error.message} className="list-group-item text-danger">{error.message}</li>)}
+                </ul>
                 <form className="p-30 bg-gray rounded" onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="form-group col-md-12 my-5">
