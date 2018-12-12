@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Banner from '../../Banner';
 import Article from '../../Article';
@@ -45,6 +44,9 @@ Articles.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   })).isRequired,
+  handlePagination: PropTypes.func.isRequired,
+  nextUrl: PropTypes.string.isRequired,
+  prevUrl: PropTypes.string.isRequired,
 };
 
 export default Articles;
