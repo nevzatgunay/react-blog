@@ -15,7 +15,7 @@ const SingleArticle = ({ article }) => {
               <br />
               <p>
                 <span className="opacity-70 mr-8">By</span>
-                <a className="text-white" href="#">{article.user.name}</a>
+                <a className="text-white" href="#foo">{article.user.name}</a>
               </p>
               <p>
                 <img className="rounded-circle w-40" src={`${process.env.PUBLIC_URL}/assets/img/avatar/2.jpg`} alt="..." />

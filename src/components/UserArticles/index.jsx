@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Articles from './Articles';
 
-class Welcome extends React.Component {
+class UserArticles extends React.Component {
   constructor() {
     super();
 
@@ -11,7 +12,7 @@ class Welcome extends React.Component {
   }
 
   async componentWillMount() {
-    const articles = await this.props.getArticles();
+    const articles = await this.props.getUserArticles(this.props.token);
 
     this.setState({
       articles,
@@ -21,7 +22,7 @@ class Welcome extends React.Component {
   }
 
   handlePagination = async (url) => {
-    const articles = await this.props.getArticles(url);
+    const articles = await this.props.getUserArticles(this.props.token, url);
     this.setState({
       articles,
     });
@@ -39,4 +40,8 @@ class Welcome extends React.Component {
   }
 }
 
-export default Welcome;
+UserArticles.propTypes = {
+  getUserArticles: PropTypes.func.isRequired,
+};
+
+export default UserArticles;

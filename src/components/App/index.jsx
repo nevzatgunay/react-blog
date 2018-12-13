@@ -10,6 +10,8 @@ import Login from '../Login';
 import SingleArticle from '../SingleArticle';
 import CreateArticle from '../CreateArticle';
 import Footer from '../Footer';
+import RedirectIfAuth from '../RedirectIfAuth';
+import UserArticles from '../UserArticles';
 
 class App extends React.Component {
   constructor() {
@@ -33,7 +35,6 @@ class App extends React.Component {
     this.setState = ({
       authUser,
     });
-    console.log('history:push');
     localStorage.setItem('user', JSON.stringify(authUser));
     this.props.history.push('/');
   }
@@ -80,7 +81,7 @@ class App extends React.Component {
             )
           }
         />
-        <Auth 
+        <Auth
           path="/articles/create"
           component={CreateArticle}
           props={{
@@ -101,31 +102,35 @@ class App extends React.Component {
                 token={this.state.authUser.token}
               />
             )
-          } 
+          }
         />
-        <Route
+        <RedirectIfAuth
           path="/login"
-          render={
-            props => (
-              <Login
-                {...props}
-                setAuthUser={this.setAuthUser}
-                // eslint-disable-next-line
-                loginUser={this.props.authService.loginUser}
-              />)
-          }
+          component={Login}
+          props={{
+            setAuthUser: this.setAuthUser,
+            loginUser: this.props.authService.loginUser,
+          }}
+          isAuthenticated={this.state.authUser !== null}
         />
-        <Route
+        <RedirectIfAuth
           path="/register"
-          render={
-          props => (
-            <Register
-              {...props}
-              // eslint-disable-next-line
-              registerUser={this.props.authService.registerUser}
-              setAuthUser={this.setAuthUser}
-            />)
-          }
+          component={Register}
+          props={{
+            setAuthUser: this.setAuthUser,
+            registerUser: this.props.authService.registerUser,
+          }}
+          isAuthenticated={this.state.authUser !== null}
+        />
+        <Auth
+          path="/user/articles"
+          component={UserArticles}
+          props={{
+            getUserArticles: this.props.articlesService.getUserArticles,
+            setArticles: this.setArticles,
+            token: this.state.authUser ? this.state.setAuthUser.token : null,
+          }}
+          isAuthenticated={this.state.authUser !== null}
         />
         {
           location.pathname !== '/login' && location.pathname !== '/register' && (
