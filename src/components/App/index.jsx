@@ -15,6 +15,7 @@ class App extends React.Component {
     super();
     this.state = {
       authUser: null,
+      articles: [],
     };
   }
 
@@ -36,6 +37,12 @@ class App extends React.Component {
     this.props.history.push('/');
   }
 
+  setArticles = (articles) => {
+    this.setState({
+      articles,
+    });
+  }
+
   render() {
     const { location } = this.props;
 
@@ -55,6 +62,7 @@ class App extends React.Component {
               <Welcome
                 {...props}
                 getArticles={this.props.articlesService.getArticles}
+                setArticles={this.setArticles}
               />
             )
           }
@@ -66,6 +74,7 @@ class App extends React.Component {
               <SingleArticle
                 {...props}
                 getArticle={this.props.articlesService.getArticle}
+                articles={this.state.articles}
               />
             )
           }
