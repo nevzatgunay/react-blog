@@ -45,6 +45,13 @@ class App extends React.Component {
     });
   }
 
+  removeAuthUser = () => {
+    localStorage.removeItem('user');
+    this.setState({
+      authUser: null,
+    });
+  }
+
   render() {
     const { location } = this.props;
 
@@ -53,7 +60,7 @@ class App extends React.Component {
         {
           location.pathname !== '/login' && location.pathname !== '/register' && (
             // eslint-disable-next-line
-            <Navbar authUser={this.state.authUser} />
+            <Navbar authUser={this.state.authUser} removeAuthUser={this.removeAuthUser}/>
           )
         }
         <Route

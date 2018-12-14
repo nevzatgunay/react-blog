@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Navbar = ({ authUser }) => {
+const Navbar = ({ authUser, removeAuthUser }) => {
   return (
     <nav className="topbar topbar-inverse topbar-expand-md topbar-sticky">
       <div className="container">
@@ -36,7 +36,7 @@ const Navbar = ({ authUser }) => {
                   </Link>
                   <div className="nav-submenu">
                     <Link className="nav-link" to="/user/articles">My articles</Link>
-                    <a className="nav-link" href="#foo">Logout</a>
+                    <Link className="nav-link" to="/" onClick={removeAuthUser}>Logout</Link>
                   </div>
                 </li>
               )
