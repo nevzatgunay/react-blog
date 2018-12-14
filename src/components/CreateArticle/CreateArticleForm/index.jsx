@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import Banner from '../../Banner';
 
 
-const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors }) => {
+const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors, editing, article, title, category, content, updateArticle }) => {
   return (
     <div>
       <Banner
         backgroundImage={`url(${process.env.PUBLIC_URL}/assets/img/bg-laptop.jpg)`}
-        title="Write an article"
-        subTitle=""
+        title={editing ? `Editing Article: ${article.title}` : 'Write an article'}
       />
       <main className="main-content">
         <section className="section">
@@ -19,16 +18,16 @@ const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors }) 
                 <ul className="list-group">
                   {errors.map(error => <li key={error.message} className="list-group-item text-danger">{error.message}</li>)}
                 </ul>
-                <form className="p-30 bg-gray rounded" onSubmit={handleSubmit}>
+                <form className="p-30 bg-gray rounded" onSubmit={editing ? updateArticle : handleSubmit}>
                   <div className="row">
                     <div className="form-group col-md-12 my-5">
                       <input type="file" className="form-control" name="image" onChange={handleInputChange} />
                     </div>
                     <div className="form-group col-12 col-md-6">
-                      <input className="form-control form-control-lg" type="text" name="title" placeholder="Title" onChange={handleInputChange} />
+                      <input className="form-control form-control-lg" type="text" name="title" placeholder="Title" value={title} onChange={handleInputChange} />
                     </div>
                     <div className="form-group col-12 col-md-6">
-                      <select name="category" onChange={handleInputChange} id className="form-control form-control-lg">
+                      <select name="category" onChange={handleInputChange} id value={category} className="form-control form-control-lg">
                         {
                           categories.map(
                             category => (
@@ -48,11 +47,12 @@ const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors }) 
                       placeholder="Content"
                       name="content"
                       defaultValue=""
+                      value={content}
                       onChange={handleInputChange}
                     />
                   </div>
                   <div className="text-center">
-                    <button className="btn btn-lg btn-primary" type="submit">Create Article</button>
+                    <button className="btn btn-lg btn-primary" type="submit">{editing ? 'Update Article' : 'Create Article'}</button>
                   </div>
                 </form>
               </div>
@@ -68,6 +68,17 @@ CreateArticle.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.array).isRequired,
+  errors: PropTypes.arrayOf(PropTypes.shape({
+    message: PropTypes.string.isRequired,
+  })).isRequired,
+  editing: PropTypes.bool.isRequired,
+  article: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  }),
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  category: PropTypes.number.isRequired,
+  updateArticle: PropTypes.func.isRequired,
 };
 
 export default CreateArticle;
