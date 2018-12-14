@@ -19,6 +19,20 @@ export default class ArticlesService {
     return response.data.data;
   }
 
+  async deleteArticle(id, token) {
+    await Axios.delete(`${config.apiUrl}/articles/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return true;
+  }
+
+  async getArticle(slug) {
+    const response = await Axios.get(`${config.apiUrl}/article/${slug}`);
+    return response.data.data;
+  }
+
   async getArticleCategories() {
     const categories = JSON.parse(localStorage.getItem('categories'));
 

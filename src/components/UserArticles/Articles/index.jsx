@@ -4,7 +4,7 @@ import Banner from '../../Banner';
 import Article from '../../Article';
 
 
-const Articles = ({ articles, handlePagination, nextUrl, prevUrl }) => {
+const Articles = ({ articles, handlePagination, nextUrl, prevUrl, deleteArticle }) => {
   return (
     <div>
       <Banner
@@ -19,6 +19,9 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl }) => {
               articles && articles.map(article => (
                 <div key={article.id}>
                   <Article article={article} />
+                  <div className="text-center">
+                    <button onClick={() => deleteArticle(article.id)} type="button" className="btn btn-danger">Delete Article</button>
+                  </div>
                   <hr />
                 </div>
               ))

@@ -128,6 +128,7 @@ class App extends React.Component {
           props={{
             getUserArticles: this.props.articlesService.getUserArticles,
             setArticles: this.setArticles,
+            deleteArticles: this.props.articlesService.deleteArticles,
             token: this.state.authUser ? this.state.setAuthUser.token : null,
           }}
           isAuthenticated={this.state.authUser !== null}
