@@ -19,6 +19,8 @@ class CreateArticle extends React.Component {
   }
 
   async componentWillMount() {
+    const categories = await this.props.getArticleCategories();
+
     if (this.props.match.params.slug) {
       const article = this.props.article.find(articleInArray =>
         articleInArray.slug === this.props.match.params.slug);
@@ -27,8 +29,6 @@ class CreateArticle extends React.Component {
         this.props.history.push('/user/articles');
         return;
       }
-
-      const categories = await this.props.getArticleCategories();
 
       this.setState({
         editing: true,
@@ -49,8 +49,10 @@ class CreateArticle extends React.Component {
     event.preventDefault();
     try {
       await this.props.createArticle(this.state, this.props.token);
+      this.props.notyService.success('Article created successfully.');
       this.props.history.push('/');
     } catch (errors) {
+      this.props.notyService.error('Please check for errors. Something went wrong.');
       this.setState({
         errors,
       });
@@ -66,9 +68,10 @@ class CreateArticle extends React.Component {
         content: this.state.content,
         category: this.state.category,
       }, this.state.article, this.props.token);
-
+      this.props.notyService.success('Article updated successfully.');
       this.props.history.push('/');
     } catch (errors) {
+      this.props.notyService.error('Please check for errors. Something went wrong.');
       this.setState({ errors });
     }
   }

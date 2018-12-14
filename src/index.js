@@ -5,12 +5,14 @@ import { BrowserRouter, withRouter } from 'react-router-dom';
 import AuthService from './services/auth';
 import ArticlesService from './services/articles';
 import App from './components/App';
+import NotificationService from './services/notifications';
 import * as registerServiceWorker from './registerServiceWorker';
 
 const Main = withRouter(props => ((
   <App
     authService={new AuthService()}
     articlesService={new ArticlesService()}
+    notyService={new NotificationService()}
     {...props}
   />
 )));
