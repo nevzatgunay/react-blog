@@ -50,6 +50,7 @@ Articles.propTypes = {
   handlePagination: PropTypes.func.isRequired,
   nextUrl: PropTypes.string.isRequired,
   prevUrl: PropTypes.string.isRequired,
+  deleteArticle: PropTypes.func.isRequired,
 };
 
 export default Articles;
