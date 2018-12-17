@@ -4,7 +4,9 @@ import Banner from '../../Banner';
 import Article from '../../Article';
 
 
-const Articles = ({ articles, handlePagination, nextUrl, prevUrl }) => {
+const Articles = ({
+  articles, handlePagination, nextUrl, prevUrl,
+}) => {
   return (
     <div>
       <Banner
@@ -43,10 +45,16 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl }) => {
 Articles.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-  })).isRequired,
+  })),
   handlePagination: PropTypes.func.isRequired,
-  nextUrl: PropTypes.string.isRequired,
-  prevUrl: PropTypes.string.isRequired,
+  nextUrl: PropTypes.string,
+  prevUrl: PropTypes.string,
+};
+
+Articles.defaultProps = {
+  articles: [],
+  nextUrl: null,
+  prevUrl: null,
 };
 
 export default Articles;

@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import Banner from '../../Banner';
 
 
-const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors, editing, article, title, category, content, updateArticle }) => {
+const CreateArticle = ({
+  handleInputChange, categories, handleSubmit, errors, editing, article, title,
+  category, content, updateArticle,
+}) => {
   return (
     <div>
       <Banner
@@ -27,15 +30,13 @@ const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors, ed
                       <input className="form-control form-control-lg" type="text" name="title" placeholder="Title" value={title} onChange={handleInputChange} />
                     </div>
                     <div className="form-group col-12 col-md-6">
-                      <select name="category" onChange={handleInputChange} id value={category} className="form-control form-control-lg">
+                      <select name="category" onChange={handleInputChange} value={category || ''} className="form-control form-control-lg">
+                        <option value>Select Category</option>
                         {
-                          categories.map(
-                            category => (
-                              <option key={category.id} value={category.id}>
-                                {category.name}
-                              </option>
-                            ),
-                          )
+                          categories.map(categoryInArray => (
+                            <option key={categoryInArray.id} value={categoryInArray.id}>
+                              {categoryInArray.name}
+                            </option>))
                         }
                       </select>
                     </div>
@@ -46,7 +47,6 @@ const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors, ed
                       rows={4}
                       placeholder="Content"
                       name="content"
-                      defaultValue=""
                       value={content}
                       onChange={handleInputChange}
                     />
@@ -67,7 +67,10 @@ const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors, ed
 CreateArticle.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  categories: PropTypes.arrayOf(PropTypes.array).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
   errors: PropTypes.arrayOf(PropTypes.shape({
     message: PropTypes.string.isRequired,
   })).isRequired,
@@ -77,8 +80,13 @@ CreateArticle.propTypes = {
   }),
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-  category: PropTypes.number.isRequired,
+  category: PropTypes.number,
   updateArticle: PropTypes.func.isRequired,
+};
+
+CreateArticle.defaultProps = {
+  article: null,
+  category: null,
 };
 
 export default CreateArticle;
