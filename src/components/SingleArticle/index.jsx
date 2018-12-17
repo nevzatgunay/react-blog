@@ -63,7 +63,7 @@ class SingleArticleContainer extends React.Component {
 SingleArticleContainer.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.shape({
     find: PropTypes.func.isRequired,
-  })),
+  })).isRequired,
   getArticle: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({

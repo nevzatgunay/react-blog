@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import renderHtml from 'react-render-html';
 
 const SingleArticle = ({ article }) => {
   return (
@@ -36,7 +37,7 @@ const SingleArticle = ({ article }) => {
             <div className="row">
               <div className="col-12 col-lg-8 offset-lg-2">
                 {
-                  article.content
+                  renderHtml(article.content)
                 }
               </div>
             </div>
