@@ -4,7 +4,9 @@ import Banner from '../../Banner';
 import Article from '../../Article';
 
 
-const Articles = ({ articles, handlePagination, nextUrl, prevUrl, deleteArticle, editArticle }) => {
+const Articles = ({
+  articles, handlePagination, nextUrl, prevUrl, deleteArticle, editArticle,
+}) => {
   return (
     <div>
       <Banner

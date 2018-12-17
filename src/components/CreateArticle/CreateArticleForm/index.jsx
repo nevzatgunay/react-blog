@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Banner from '../../Banner';
-
 
 const CreateArticle = ({
   handleInputChange, categories, handleSubmit, errors, editing, article, title,
-  category, content, updateArticle,
+  category, content, updateArticle, handleEditorState,
 }) => {
   return (
     <div>
@@ -42,13 +43,9 @@ const CreateArticle = ({
                     </div>
                   </div>
                   <div className="form-group">
-                    <textarea
-                      className="form-control form-control-lg"
-                      rows={4}
-                      placeholder="Content"
-                      name="content"
-                      value={content}
-                      onChange={handleInputChange}
+                    <Editor
+                      editorState={content}
+                      onEditorStateChange={handleEditorState}
                     />
                   </div>
                   <div className="text-center">
@@ -79,9 +76,10 @@ CreateArticle.propTypes = {
     title: PropTypes.string.isRequired,
   }),
   title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  category: PropTypes.number,
+  content: PropTypes.objectOf(PropTypes.any).isRequired,
+  category: PropTypes.string,
   updateArticle: PropTypes.func.isRequired,
+  handleEditorState: PropTypes.func.isRequired,
 };
 
 CreateArticle.defaultProps = {

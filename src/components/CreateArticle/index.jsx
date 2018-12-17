@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import draftToHtml from 'draftjs-to-html';
+import { EditorState, convertToRaw } from 'draft-js';
 import CreateArticleForm from './CreateArticleForm';
 
 class CreateArticle extends React.Component {
@@ -9,7 +11,7 @@ class CreateArticle extends React.Component {
     this.state = {
       title: '',
       image: null,
-      content: '',
+      content: EditorState.createEmpty(),
       category: '',
       errors: [],
       categories: [],
@@ -22,8 +24,9 @@ class CreateArticle extends React.Component {
     const categories = await this.props.getArticleCategories();
 
     if (this.props.match.params.slug) {
-      const article = this.props.article.find(articleInArray =>
-        articleInArray.slug === this.props.match.params.slug);
+      const article = this.props.article.find(
+        articleInArray => articleInArray.slug === this.props.match.params.slug,
+      );
 
       if (!article) {
         this.props.history.push('/user/articles');
@@ -45,10 +48,21 @@ class CreateArticle extends React.Component {
     }
   }
 
+  handleEditorState = (editorState) => {
+    this.setState({
+      content: editorState,
+    });
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await this.props.createArticle(this.state, this.props.token);
+      await this.props.createArticle({
+        title: this.state.title,
+        content: draftToHtml(convertToRaw(this.state.content.getCurrentContent())),
+        category: this.state.category,
+        image: this.state.image,
+      }, this.props.token);
       this.props.notyService.success('Article created successfully.');
       this.props.history.push('/');
     } catch (errors) {
@@ -65,7 +79,7 @@ class CreateArticle extends React.Component {
       await this.props.updateArticle({
         title: this.state.title,
         image: this.state.image,
-        content: this.state.content,
+        content: draftToHtml(convertToRaw(this.state.content.getCurrentContent())),
         category: this.state.category,
       }, this.state.article, this.props.token);
       this.props.notyService.success('Article updated successfully.');
@@ -95,12 +109,13 @@ class CreateArticle extends React.Component {
         content={this.state.content}
         category={this.state.category}
         updateArticle={this.updateArticle}
+        handleEditorState={this.handleEditorState}
       />
     );
   }
 }
 
-CreateArticle.propType = {
+CreateArticle.propTypes = {
   getArticleCategories: PropTypes.func.isRequired,
   createArticle: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
@@ -113,14 +128,9 @@ CreateArticle.propType = {
       slug: PropTypes.string,
     }).isRequired,
   }).isRequired,
-  articles: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
-    category: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
-    created_at: PropTypes.string.isRequired,
-  })),
+  article: PropTypes.shape({
+    find: PropTypes.func.isRequired,
+  }),
   notyService: PropTypes.shape({
     success: PropTypes.func.isRequired,
     error: PropTypes.func.isRequired,
@@ -129,7 +139,7 @@ CreateArticle.propType = {
 
 CreateArticle.defaultProps = {
   updateArticle: () => {},
-  articles: [],
+  article: () => {},
 };
 
 export default CreateArticle;

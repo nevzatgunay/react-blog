@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SingleArticle = ({ article }) => {
   return (
@@ -39,68 +40,6 @@ const SingleArticle = ({ article }) => {
                 }
               </div>
             </div>
-            <br />
-            <p>
-              <img src={`${process.env.PUBLIC_URL}/assets/img/blog-img.jpg`} alt="..." />
-            </p>
-            <br />
-            <div className="row">
-              <div className="col-12 col-lg-8 offset-lg-2">
-                <p>
-                  Assertively empower customized alignments vis-a-vis go forward vortals.
-                  Completely monetize inexpensive alignments whereas market positioning
-                  services. Uniquely revolutionize multifunctional strategic theme areas with
-                  adaptive architectures. Interactively orchestrate next-generation content
-                  with proactive applications. Appropriately initiate market-driven results
-                  through backend deliverables.
-                </p>
-                <ul>
-                  <li>Energistically coordinate business relationships</li>
-                  <li>Change via resource-leveling innovation</li>
-                  <li>Efficiently develop fully researched experiences and integrated</li>
-                  <li>Assertively empower customized alignments vis-a-vis go forward vortals</li>
-                </ul>
-                <p>
-                  Quickly innovate high-quality catalysts for change via resource-leveling
-                  innovation. Seamlessly expedite just in time infomediaries vis-a-vis viral
-                  manufactured products. Rapidiously network synergistic leadership whereas
-                  emerging data. Professionally synergize compelling partnerships vis-a-vis
-                  leading-edge e-business. Efficiently develop fully researched experiences
-                  and integrated. Phosfluorescently simplify ubiquitous bandwidth without
-                  client-centered information. Professionally recaptiualize flexible relationships
-                  via performance based synergy. Monotonectally mesh interoperable processes
-                  through high-quality e-commerce. Dynamically build team building models
-                  without 24/7 internal or &ldquo;organic&rdquo; sources. Compellingly incentivize
-                  e-business methods of empowerment with.
-                </p>
-                <blockquote className="blockquote">
-                  <div className="quote-sign" />
-                  <p>
-                    Objectively grow out-of-the-box results with go forward methodologies.
-                    Progressively exploit dynamic functionalities without ethical portals.
-                    Competently facilitate timely total linkage with.
-                  </p>
-                  <footer>
-                    Someone famous in
-                    <cite title="Source Title">Source Title</cite>
-                  </footer>
-                </blockquote>
-                <p>
-                  Proactively underwhelm proactive leadership skills whereas plug-and-play
-                  paradigms. Credibly whiteboard client-centered intellectual capital after
-                  B2B total linkage. Progressively innovate technically sound manufactured products
-                  whereas diverse meta-services. Continually orchestrate ubiquitous core
-                  competencies rather than market positioning &ldquo;outside the box&rdquo;
-                  thinking. Dramatically redefine out-of-the-box schemas.
-                </p>
-                <div className="gap-multiline-items-1 mt-30">
-                  <a className="badge badge-pill badge-default" href="#foo">Record</a>
-                  <a className="badge badge-pill badge-default" href="#foo">Progress</a>
-                  <a className="badge badge-pill badge-default" href="#foo">Customers</a>
-                  <a className="badge badge-pill badge-default" href="#foo">News</a>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div className="section bt-1 bg-grey">
@@ -115,6 +54,20 @@ const SingleArticle = ({ article }) => {
       </main>
     </div>
   );
+};
+
+SingleArticle.propTypes = {
+  article: PropTypes.arrayOf(PropTypes.shape({
+    content: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  })),
+};
+
+SingleArticle.defaultProps = {
+  article: [],
 };
 
 export default SingleArticle;

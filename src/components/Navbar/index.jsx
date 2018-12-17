@@ -68,6 +68,7 @@ Navbar.propTypes = {
       name: PropTypes.string,
     }).isRequired,
   }),
+  removeAuthUser: PropTypes.func.isRequired,
 };
 
 Navbar.defaultProps = {

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const Article = ({ article }) => {
@@ -28,6 +28,19 @@ const Article = ({ article }) => {
       </div>
     </article>
   );
+};
+
+Article.propTypes = {
+  article: PropTypes.arrayOf(PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    category: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    created_at: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default Article;

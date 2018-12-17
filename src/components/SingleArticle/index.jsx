@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
+import PropTypes from 'prop-types';
 import Article from './Article';
 import config from '../../config';
 
@@ -16,7 +17,7 @@ class SingleArticleContainer extends React.Component {
 
   async componentWillMount() {
     let article = this.props.articles.find(
-      article => article.slug === this.props.match.params.slug
+      art => art.slug === this.props.match.params.slug,
     );
 
     if (article) {
@@ -58,5 +59,17 @@ class SingleArticleContainer extends React.Component {
     );
   }
 }
+
+SingleArticleContainer.propTypes = {
+  articles: PropTypes.arrayOf(PropTypes.shape({
+    find: PropTypes.func.isRequired,
+  })),
+  getArticle: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      slug: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default SingleArticleContainer;
