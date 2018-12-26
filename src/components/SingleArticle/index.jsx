@@ -1,9 +1,7 @@
 import React from 'react';
-import Axios from 'axios';
 import PropTypes from 'prop-types';
-import Article from './Article';
-import config from '../../config';
 
+import Article from './Article';
 
 class SingleArticleContainer extends React.Component {
   constructor() {
@@ -17,7 +15,7 @@ class SingleArticleContainer extends React.Component {
 
   async componentWillMount() {
     let article = this.props.articles.find(
-      art => art.slug === this.props.match.params.slug,
+      articleInArray => articleInArray.slug === this.props.match.params.slug,
     );
 
     if (article) {
@@ -27,17 +25,11 @@ class SingleArticleContainer extends React.Component {
       });
     } else {
       article = await this.props.getArticle(this.props.match.params.slug);
-
       this.setState({
         article,
         loading: false,
       });
     }
-  }
-
-  async getArticle(slug) {
-    const response = await Axios.get(`${config.apiUrl}/article/${slug}`);
-    return response.data.data;
   }
 
   render() {
@@ -51,9 +43,8 @@ class SingleArticleContainer extends React.Component {
           )
         }
         {
-          this.state.loading && (
-            <p className="text-center">LOADING...</p>
-          )
+          this.state.loading &&
+          <p className="text-center">LOADING ...</p>
         }
       </div>
     );
@@ -61,15 +52,20 @@ class SingleArticleContainer extends React.Component {
 }
 
 SingleArticleContainer.propTypes = {
-  articles: PropTypes.arrayOf(PropTypes.shape({
-    find: PropTypes.func.isRequired,
-  })).isRequired,
   getArticle: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      slug: PropTypes.string,
+      slug: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  articles: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
+    category: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    created_at: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default SingleArticleContainer;

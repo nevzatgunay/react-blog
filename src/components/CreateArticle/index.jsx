@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import draftToHtml from 'draftjs-to-html';
-import { EditorState, convertToRaw } from 'draft-js';
+import htmlToDraftjs from 'html-to-draftjs';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+
 import CreateArticleForm from './CreateArticleForm';
 
 class CreateArticle extends React.Component {
@@ -12,7 +14,7 @@ class CreateArticle extends React.Component {
       title: '',
       image: null,
       content: EditorState.createEmpty(),
-      category: '',
+      category: null,
       errors: [],
       categories: [],
       editing: false,
@@ -21,27 +23,30 @@ class CreateArticle extends React.Component {
   }
 
   async componentWillMount() {
-    const categories = await this.props.getArticleCategories();
-
     if (this.props.match.params.slug) {
-      const article = this.props.article.find(
+      const article = this.props.articles.find(
         articleInArray => articleInArray.slug === this.props.match.params.slug,
       );
-
       if (!article) {
         this.props.history.push('/user/articles');
         return;
       }
 
+      const { contentBlocks, entityMap } = htmlToDraftjs(article.content);
+
+      const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+
+      const categories = await this.props.getArticleCategories();
       this.setState({
         editing: true,
         article,
         categories,
         title: article.title,
         category: article.category_id,
-        content: article.content,
+        content: EditorState.createWithContent(contentState),
       });
     } else {
+      const categories = await this.props.getArticleCategories();
       this.setState({
         categories,
       });
@@ -56,6 +61,7 @@ class CreateArticle extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       await this.props.createArticle({
         title: this.state.title,
@@ -67,9 +73,7 @@ class CreateArticle extends React.Component {
       this.props.history.push('/');
     } catch (errors) {
       this.props.notyService.error('Please check for errors. Something went wrong.');
-      this.setState({
-        errors,
-      });
+      this.setState({ errors });
     }
   }
 
@@ -128,9 +132,14 @@ CreateArticle.propTypes = {
       slug: PropTypes.string,
     }).isRequired,
   }).isRequired,
-  article: PropTypes.shape({
-    find: PropTypes.func.isRequired,
-  }),
+  articles: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
+    category: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    created_at: PropTypes.string.isRequired,
+  })),
   notyService: PropTypes.shape({
     success: PropTypes.func.isRequired,
     error: PropTypes.func.isRequired,
@@ -139,7 +148,7 @@ CreateArticle.propTypes = {
 
 CreateArticle.defaultProps = {
   updateArticle: () => {},
-  article: () => {},
+  articles: [],
 };
 
 export default CreateArticle;

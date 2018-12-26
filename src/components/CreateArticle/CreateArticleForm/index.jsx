@@ -2,72 +2,83 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 import Banner from '../../Banner';
 
-const CreateArticle = ({
-  handleInputChange, categories, handleSubmit, errors, editing, article, title,
-  category, content, updateArticle, handleEditorState,
-}) => {
-  return (
-    <div>
-      <Banner
-        backgroundImage={`url(${process.env.PUBLIC_URL}/assets/img/bg-laptop.jpg)`}
-        title={editing ? `Editing Article: ${article.title}` : 'Write an article'}
-      />
-      <main className="main-content">
-        <section className="section">
-          <div className="container">
-            <div className="row">
-              <div className="col-12 col-lg-12">
-                <ul className="list-group">
-                  {errors.map(error => <li key={error.message} className="list-group-item text-danger">{error.message}</li>)}
-                </ul>
-                <form className="p-30 bg-gray rounded" onSubmit={editing ? updateArticle : handleSubmit}>
-                  <div className="row">
-                    <div className="form-group col-md-12 my-5">
-                      <input type="file" className="form-control" name="image" onChange={handleInputChange} />
-                    </div>
-                    <div className="form-group col-12 col-md-6">
-                      <input className="form-control form-control-lg" type="text" name="title" placeholder="Title" value={title} onChange={handleInputChange} />
-                    </div>
-                    <div className="form-group col-12 col-md-6">
-                      <select name="category" onChange={handleInputChange} value={category || ''} className="form-control form-control-lg">
-                        <option value>Select Category</option>
-                        {
-                          categories.map(categoryInArray => (
-                            <option key={categoryInArray.id} value={categoryInArray.id}>
-                              {categoryInArray.name}
-                            </option>))
-                        }
-                      </select>
-                    </div>
+const CreateArticleForm = ({
+  handleInputChange,
+  handleEditorState,
+  categories, handleSubmit, errors, editing, article, title, category, content, updateArticle,
+}) => ((
+  <div>
+    <Banner
+      backgroundImage={`url(${process.env.PUBLIC_URL}/assets/img/bg-laptop.jpg)`}
+      title={editing ? `Editing Article: ${article.title}` : 'Write an article'}
+    />
+    <main className="main-content">
+      <section className="section">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-lg-12">
+              <ul className="list-group">
+                {errors.map(error => <li key={error.message} className="list-group-item text-danger">{error.message}</li>)}
+              </ul>
+              <form className="p-30 bg-gray rounded" onSubmit={editing ? updateArticle : handleSubmit}>
+                <div className="row">
+                  <div className="form-group col-md-12 my-5">
+                    <input type="file" className="form-control" onChange={handleInputChange} name="image" />
                   </div>
-                  <div className="form-group">
-                    <Editor
-                      editorState={content}
-                      onEditorStateChange={handleEditorState}
+                  <div className="form-group col-12 col-md-6">
+                    <input
+                      className="form-control form-control-lg"
+                      type="text"
+                      name="title"
+                      placeholder="Title"
+                      value={title}
+                      onChange={handleInputChange}
                     />
                   </div>
-                  <div className="text-center">
-                    <button className="btn btn-lg btn-primary" type="submit">{editing ? 'Update Article' : 'Create Article'}</button>
+                  <div className="form-group col-12 col-md-6">
+                    <select name="category" onChange={handleInputChange} value={category || ''} className="form-control form-control-lg">
+                      <option value>Select category</option>
+                      {categories.map(
+                        categoryInArray => (
+                          <option
+                            key={categoryInArray.id}
+                            value={categoryInArray.id}
+                          >
+                            {categoryInArray.name}
+                          </option>
+                        ),
+                      )}
+                    </select>
                   </div>
-                </form>
-              </div>
+                </div>
+                <div className="form-group">
+                  <Editor
+                    editorState={content}
+                    onEditorStateChange={handleEditorState}
+                  />
+                </div>
+                <div className="text-center">
+                  <button className="btn btn-lg btn-primary" type="submit">{editing ? 'Update Article' : 'Create Article'}</button>
+                </div>
+              </form>
             </div>
           </div>
-        </section>
-      </main>
-    </div>
-  );
-};
+        </div>
+      </section>
+    </main>
+  </div>
+));
 
-CreateArticle.propTypes = {
+CreateArticleForm.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   errors: PropTypes.arrayOf(PropTypes.shape({
     message: PropTypes.string.isRequired,
   })).isRequired,
@@ -79,12 +90,11 @@ CreateArticle.propTypes = {
   content: PropTypes.objectOf(PropTypes.any).isRequired,
   category: PropTypes.string,
   updateArticle: PropTypes.func.isRequired,
-  handleEditorState: PropTypes.func.isRequired,
 };
 
-CreateArticle.defaultProps = {
+CreateArticleForm.defaultProps = {
   article: null,
   category: null,
 };
 
-export default CreateArticle;
+export default CreateArticleForm;

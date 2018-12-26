@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Articles from './Articles';
 
 class Welcome extends React.Component {
@@ -13,18 +15,15 @@ class Welcome extends React.Component {
   async componentWillMount() {
     const articles = await this.props.getArticles();
 
-    this.setState({
-      articles,
-    });
-
+    this.setState({ articles });
     this.props.setArticles(articles.data);
   }
 
   handlePagination = async (url) => {
     const articles = await this.props.getArticles(url);
-    this.setState({
-      articles,
-    });
+
+    this.setState({ articles });
+    this.props.setArticles(articles.data);
   }
 
   render() {
@@ -38,5 +37,9 @@ class Welcome extends React.Component {
     );
   }
 }
+
+Welcome.propTypes = {
+  getArticles: PropTypes.func.isRequired,
+};
 
 export default Welcome;

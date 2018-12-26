@@ -1,23 +1,22 @@
-/* eslint-disable */
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Route, Redirect } from 'react-router-dom';
 
-const Auth = ({ path, props, component: Component, isAuthenticated }) => {
-  return (
-    <Route
-      path={path}
-      render={
-        routerProps => {
-          if (isAuthenticated) {
-            return <Component {...props} {...routerProps} />
-          }
-          return <Redirect to="/login" />;
-        }
+const Auth = ({
+  path, props, component: Component, isAuthenticated,
+}) => (<Route
+  path={path}
+  render={
+    (routerProps) => {
+      if (isAuthenticated) {
+        return <Component {...props} {...routerProps} />;
       }
-    />
-  )
-};
+
+      return <Redirect to="/login" />;
+    }
+  }
+/>
+);
 
 Auth.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,

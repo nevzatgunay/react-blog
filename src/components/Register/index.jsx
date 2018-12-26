@@ -28,9 +28,7 @@ class Register extends React.Component {
       const user = await this.props.registerUser(this.state);
       this.props.setAuthUser(user);
     } catch (errors) {
-      this.setState({
-        errors,
-      });
+      this.setState({ errors });
     }
   }
 
