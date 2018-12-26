@@ -1,6 +1,8 @@
 import Axios from 'axios';
-import { validateAll } from 'indicative';
+
 import config from '../config';
+
+const { validateAll } = window;
 
 export default class AuthService {
   async registerUser(data) {
@@ -11,9 +13,9 @@ export default class AuthService {
     };
 
     const messages = {
-      required: ' The {{ field }} is required. ',
+      required: 'The {{ field }} is required.',
       'email.email': 'The email is invalid.',
-      'password.confirmed': 'The password confirmaton does not match.',
+      'password.confirmed': 'The password confirmation does not match.',
     };
 
     try {
@@ -28,14 +30,14 @@ export default class AuthService {
       return response.data.data;
     } catch (errors) {
       const formattedErrors = {};
-
       if (errors.response && errors.response.status === 422) {
         // eslint-disable-next-line
         formattedErrors['email'] = errors.response.data['email'][0];
         return Promise.reject(formattedErrors);
       }
-
-      errors.forEach((error) => { formattedErrors[error.field] = error.message; });
+      errors.forEach((error) => {
+        formattedErrors[error.field] = error.message;
+      });
       return Promise.reject(formattedErrors);
     }
   }
@@ -47,7 +49,7 @@ export default class AuthService {
     };
 
     const messages = {
-      required: ' The {{ field }} is required. ',
+      required: 'The {{ field }} is required.',
       'email.email': 'The email is invalid.',
     };
 
@@ -58,17 +60,18 @@ export default class AuthService {
         email: data.email,
         password: data.password,
       });
+
       return response.data.data;
     } catch (errors) {
       const formattedErrors = {};
-
       if (errors.response && errors.response.status === 401) {
         // eslint-disable-next-line
         formattedErrors['email'] = 'Invalid credentials.';
         return Promise.reject(formattedErrors);
       }
-
-      errors.forEach((error) => { formattedErrors[error.field] = error.message; });
+      errors.forEach((error) => {
+        formattedErrors[error.field] = error.message;
+      });
       return Promise.reject(formattedErrors);
     }
   }

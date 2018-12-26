@@ -1,6 +1,6 @@
 import Noty from 'noty';
 
-export default class NotificationService {
+export default class NotificationsService {
   success(message) {
     (new Noty({
       text: message,

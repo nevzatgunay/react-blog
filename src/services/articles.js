@@ -1,6 +1,8 @@
 import Axios from 'axios';
-import { validateAll } from 'indicative';
+
 import config from '../config';
+
+const { validateAll } = window;
 
 export default class ArticlesService {
   async getArticles(url = `${config.apiUrl}/articles`) {
@@ -25,11 +27,13 @@ export default class ArticlesService {
         Authorization: `Bearer ${token}`,
       },
     });
+
     return true;
   }
 
   async getArticle(slug) {
     const response = await Axios.get(`${config.apiUrl}/article/${slug}`);
+
     return response.data.data;
   }
 
@@ -54,13 +58,12 @@ export default class ArticlesService {
     try {
       const rules = {
         title: 'required',
-        image: 'required',
         content: 'required',
         category: 'required',
       };
 
       const messages = {
-        required: 'The {{ field }} is required',
+        required: 'The {{ field }} is required.',
       };
 
       await validateAll(data, rules, messages);
@@ -72,16 +75,19 @@ export default class ArticlesService {
         category_id: data.category,
         imageUrl: image.secure_url,
       }, {
-        header: {
+        headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
+
       return response.data;
     } catch (errors) {
       if (errors.response) {
-        return errors.response.data;
+        return Promise.reject(errors.response.data);
       }
+
+      return Promise.reject(errors);
     }
   }
 
@@ -94,13 +100,12 @@ export default class ArticlesService {
     try {
       const rules = {
         title: 'required',
-        image: 'required',
         content: 'required',
         category: 'required',
       };
 
       const messages = {
-        required: 'The {{ field }} is required',
+        required: 'The {{ field }} is required.',
       };
 
       await validateAll(data, rules, messages);
@@ -111,26 +116,29 @@ export default class ArticlesService {
         category_id: data.category,
         imageUrl: image ? image.secure_url : article.imageUrl,
       }, {
-        header: {
+        headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
+
       return response.data;
     } catch (errors) {
       if (errors.response) {
-        return errors.response.data;
+        return Promise.reject(errors.response.data);
       }
+
+      return Promise.reject(errors);
     }
   }
 
   async uploadToCloudinary(image) {
     const form = new FormData();
     form.append('file', image);
-    form.append('upload_preset', 'p2pean27');
+    form.append('upload_preset', 'g5ziunzg');
 
-    const response = await Axios.post('https://api.cloudinary.com/v1_1/de81xq46s/image/upload', form);
-    console.log(response);
+    const response = await Axios.post('https://api.cloudinary.com/v1_1/bahdcoder/image/upload', form);
+
     return response.data;
   }
 }
